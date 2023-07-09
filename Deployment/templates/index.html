@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Churn Prediction</title>
+    <link rel="stylesheet" type="text/css" href="static\style.css">
+</head>
+<body>
+    <h1>Customer Churn Prediction</h1>
+
+    <form id="prediction-form" action="{{ url_for('predict') }}" method="post">
+        <label for="account-length">Account Length:</label>
+        <input type="text" id="account-length" name="account-length"><br>
+
+        
+       
+        <label for="international-plan">International Plan:</label>
+        <input type="text" id="international-plan" name="international-plan"><br>
+        
+
+        <label for="voice-mail-plan">Voice Mail Plan:</label>
+        <input type="text" id="voice-mail-plan" name="voice-mail-plan"><br>
+
+        <label for="number-vmail-messages">Number of Voicemail Messages:</label>
+        <input type="text" id="number-vmail-messages" name="number-vmail-messages"><br>
+
+        <label for="total-day-minutes">Total Day Minutes:</label>
+        <input type="text" id="total-day-minutes" name="total-day-minutes"><br>
+
+        <label for="total-day-calls">Total Day Calls:</label>
+        <input type="text" id="total-day-calls" name="total-day-calls"><br>
+
+        <label for="total-day-charge">Total Day Charge:</label>
+        <input type="text" id="total-day-charge" name="total-day-charge"><br>
+
+        <label for="total-eve-minutes">Total Eve Minutes:</label>
+        <input type="text" id="total-eve-minutes" name="total-eve-minutes"><br>
+
+        <label for="total-eve-charge">Total Eve Charge:</label>
+        <input type="text" id="total-eve-charge" name="total-eve-charge"><br>
+
+        <label for="total-night-minutes">Total Night Minutes:</label>
+        <input type="text" id="total-night-minutes" name="total-night-minutes"><br>
+
+        <label for="total-night-charge">Total Night Charge:</label>
+        <input type="text" id="total-night-charge" name="total-night-charge"><br>
+
+        <label for="total-intl-minutes">Total Intl Minutes:</label>
+<input type="text" id="total-intl-minutes" name="total-intl-minutes"><br>
+
+
+        <label for="total-intl-calls">Total Intl Calls:</label>
+        <input type="text" id="total-intl-calls" name="total-intl-calls"><br>
+
+        <label for="total-intl-charge">Total Intl Charge:</label>
+        <input type="text" id="total-intl-charge" name="total-intl-charge"><br>
+
+        <label for="customer-service-calls">Customer Service Calls:</label>
+        <input type="text" id="customer-service-calls" name="customer-service-calls"><br>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="result-container" style="display: none;">
+        <h2>Prediction Result:</h2>
+        <p id="prediction-result"></p>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            var form = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                body: new URLSearchParams(form),
+            })
+            .then(response => response.json())
+            .then(data => {
+                var predictionResult = document.getElementById('prediction-result');
+                predictionResult.textContent = 'Prediction: ' + data.prediction;
+
+                var resultContainer = document.getElementById('result-container');
+                resultContainer.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
